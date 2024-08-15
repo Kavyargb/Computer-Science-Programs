@@ -139,4 +139,78 @@ root.mainloop()
 2. **Error Handling**: When the user clicks the "Find Greatest" button, the program tries to convert the input values to floats. If the conversion fails, an error message is displayed.
 3. **Find Greatest**: If all inputs are valid, the program uses the `max()` function to find the greatest number and displays the result in a message box.
 
-I think so, these changes should make the code better.
+I think so, these changes should make the code better. But, here the thing the GUI is very basic, now let's improve it a bit
+To create a more modern and sophisticated user interface, we can use the `tkinter` library with the `ttkbootstrap` extension, which offers modern themes and widgets similar to those found in contemporary applications. Below is an example of how to enhance the UI using `ttkbootstrap`.
+
+First, you'll need to install `ttkbootstrap`:
+
+```bash
+pip install ttkbootstrap
+```
+
+Here's the updated code with a modern UI:
+
+```python
+import tkinter as tk
+from tkinter import messagebox
+from ttkbootstrap import Style
+
+def get_number_input(entry):
+    try:
+        return float(entry.get())
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Please enter a numeric value.")
+        return None
+
+def find_greatest():
+    a = get_number_input(entry_a)
+    b = get_number_input(entry_b)
+    c = get_number_input(entry_c)
+    
+    if a is not None and b is not None and c is not None:
+        greatest = max(a, b, c)
+        messagebox.showinfo("Result", f"The greatest value among the numbers you entered is: {greatest}")
+
+def clear_inputs():
+    entry_a.delete(0, tk.END)
+    entry_b.delete(0, tk.END)
+    entry_c.delete(0, tk.END)
+
+# Set up the main window
+style = Style(theme="cosmo")  # You can change the theme to "superhero", "darkly", etc.
+root = style.master
+root.title("Find the Greatest Number")
+root.geometry("400x250")
+root.resizable(False, False)
+
+# Create and place labels and entries for inputs
+ttk.Label(root, text="Enter the value of the first number (a):").grid(row=0, column=0, padx=10, pady=10, sticky="W")
+entry_a = ttk.Entry(root, width=30)
+entry_a.grid(row=0, column=1, padx=10, pady=10)
+
+ttk.Label(root, text="Enter the value of the second number (b):").grid(row=1, column=0, padx=10, pady=10, sticky="W")
+entry_b = ttk.Entry(root, width=30)
+entry_b.grid(row=1, column=1, padx=10, pady=10)
+
+ttk.Label(root, text="Enter the value of the third number (c):").grid(row=2, column=0, padx=10, pady=10, sticky="W")
+entry_c = ttk.Entry(root, width=30)
+entry_c.grid(row=2, column=1, padx=10, pady=10)
+
+# Create and place the button to calculate the greatest number
+button_frame = ttk.Frame(root)
+button_frame.grid(row=3, columnspan=2, pady=20)
+
+find_button = ttk.Button(button_frame, text="Find Greatest", command=find_greatest, bootstyle="primary")
+find_button.grid(row=0, column=0, padx=10)
+
+clear_button = ttk.Button(button_frame, text="Clear", command=clear_inputs, bootstyle="secondary")
+clear_button.grid(row=0, column=1, padx=10)
+
+# Start the GUI event loop
+root.mainloop()
+```
+
+### Features of the Modern UI:
+1. **`ttkbootstrap` Theme**: The interface uses `ttkbootstrap`, which provides modern themes (`cosmo`, `superhero`, `darkly`, etc.) that give the application a contemporary look and feel.
+2. **Enhanced Widgets**: The buttons and other widgets have a modern design, with support for different styles (e.g., `primary`, `secondary`).
+3. **Improved Layout**: The interface is clean, with consistent padding and spacing, making it more user-friendly.
